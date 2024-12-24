@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Páginas de productos</h2>
+    {% if pages %}
+        <ul>
+            {% for page in pages %}
+                <li>
+                    <!-- Cambié 'page.id' para utilizar la URL correcta de detalle -->
+                    <a href="{% url 'get_page' page.id %}">{{ page.titulo }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay páginas aún.</p>
+    {% endif %}
+{% endblock %}

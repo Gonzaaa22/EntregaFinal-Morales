@@ -1,3 +1,4 @@
+<!-- Template de home -->
 {% extends 'base.html' %}
 
 {% block content %}
@@ -6,7 +7,6 @@
         <ul>
             {% for page in pages %}
                 <li>
-                    <!-- Cambié 'page.id' para utilizar la URL correcta de detalle -->
                     <a href="{% url 'get_page' page.id %}">{{ page.titulo }}</a>
                 </li>
             {% endfor %}

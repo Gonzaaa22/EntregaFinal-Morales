@@ -1,0 +1,24 @@
+<!-- Template de lista de paginas -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Listado de Páginas</h2>
+    {% if pages %}
+        <div class="row">
+            {% for page in pages %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ page.titulo }}</h5>
+                            <p class="card-text">{{ page.contenido|truncatewords:30 }}</p>
+                            <a href="{% url 'get_page' page.id %}" class="btn btn-primary">Ver más</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No hay páginas disponibles.</p>
+    {% endif %}
+    <a href="{% url 'crear_pagina' %}" class="btn btn-success">Crear Nueva Página</a>
+{% endblock %}

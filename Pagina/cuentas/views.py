@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .forms import PerfilForm
-from cuentas import views
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
+from .forms import UserRegisterForm, PerfilForm
+from .models import Perfil
 
-def login_usuario(request):
+def login_usuario(request): #Loguearte con tu usuario
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
@@ -15,29 +16,35 @@ def login_usuario(request):
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
 
-def logout_usuario(request):
+def logout_usuario(request): #desloguearte de tu usuario
     logout(request)
     return redirect('home')
 
-def registro_usuario(request):
+def registro_usuario(request): #registro de usuario
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = UserRegisterForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            
+            Perfil.objects.create(usuario=user)
             return redirect('login')
     else:
-        form = UserCreationForm()
+        form = UserRegisterForm()
     return render(request, 'registro.html', {'form': form})
 
-def perfil_usuario(request):
-    return render(request, 'perfil.html')
+@login_required
+def perfil_usuario(request): #pedido de usuario
+    perfil, created = Perfil.objects.get_or_create(usuario=request.user)
+    return render(request, 'perfil.html', {'perfil': perfil})
 
+@login_required
 def editar_perfil(request):
+    perfil, created = Perfil.objects.get_or_create(usuario=request.user)
     if request.method == 'POST':
-        form = PerfilForm(request.POST, request.FILES, instance=request.user.perfil)
+        form = PerfilForm(request.POST, request.FILES, instance=perfil)
         if form.is_valid():
             form.save()
             return redirect('perfil')
     else:
-        form = PerfilForm(instance=request.user.perfil)
+        form = PerfilForm(instance=perfil)
     return render(request, 'editar_perfil.html', {'form': form})

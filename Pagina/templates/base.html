@@ -7,7 +7,6 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-
     <!-- Barra de Navegación -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="{% url 'home' %}">Tienda Online</a>
@@ -17,16 +16,16 @@
                     <a class="nav-link" href="{% url 'home' %}">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'page' %}">Páginas</a>
+                    <a class="nav-link" href="{% url 'lista_paginas' %}">Páginas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'about' %}">Acerca de</a>
+                    <a class="nav-link" href="{% url 'acerca_de' %}">Acerca de</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'perfil' %}">Perfil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'signup' %}">Registrar</a>
+                    <a class="nav-link" href="{% url 'registro' %}">Registrar</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a>
@@ -40,7 +39,5 @@
         {% block content %}
         {% endblock %}
     </div>
-
 </body>
 </html>
-

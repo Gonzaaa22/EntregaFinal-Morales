@@ -1,10 +1,10 @@
+<!-- Template de pages -->
 {% extends 'base.html' %}
 
 {% block content %}
     <h2>Detalles de la Página: {{ page.titulo }}</h2>
     <p>{{ page.contenido }}</p>
 
-    <!-- Puedes añadir un enlace para editar o volver a la lista de páginas -->
     <a href="{% url 'editar_pagina' page.id %}">Editar Página</a> |
     <a href="{% url 'lista_paginas' %}">Volver a la lista de páginas</a>
 {% endblock %}

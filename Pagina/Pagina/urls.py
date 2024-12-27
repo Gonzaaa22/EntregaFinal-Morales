@@ -6,6 +6,6 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('app_coder.urls')),  
-    path('cuentas/', include('cuentas.urls')),  # Incluir rutas de la app_usuarios
+    path('cuentas/', include('cuentas.urls')), 
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

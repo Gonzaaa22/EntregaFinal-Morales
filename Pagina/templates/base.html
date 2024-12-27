@@ -30,11 +30,23 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a>
                 </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'ver_carrito' %}">
+                        Carrito
+                        {% with total_items=request.user.cartitem_set.count %}
+                            {% if total_items > 0 %}
+                                <span class="badge badge-pill badge-primary">{{ total_items }}</span>
+                            {% endif %}
+                        {% endwith %}
+                    </a>
+                </li>
+                {% endif %}
             </ul>
         </div>
     </nav>
 
-    <!-- Contenido específico de la página -->
+    
     <div class="container">
         {% block content %}
         {% endblock %}

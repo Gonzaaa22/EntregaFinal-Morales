@@ -1,0 +1,30 @@
+<!-- categoria.html en app_coder -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h1>Productos en la categoría: {{ categoria|capfirst }}</h1>
+        <div class="row">
+            {% for producto in productos %}
+                <div class="col-md-4">
+                    <div class="card">
+                        {% if producto.imagen %}
+                            <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.titulo }}">
+                        {% else %}
+                            <img src="https://via.placeholder.com/150" class="card-img-top" alt="Imagen no disponible">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ producto.titulo }}</h5>
+                            <p class="card-text">{{ producto.descripcion }}</p>
+                            <p class="card-text">Precio: ${{ producto.precio }}</p>
+                            <a href="{% url 'detalle_producto' producto.id %}" class="btn btn-primary">Ver detalles</a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p>No hay productos en esta categoría.</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

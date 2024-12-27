@@ -1,7 +1,34 @@
-<!-- Template detalle de pagina -->
 {% extends 'base.html' %}
 
 {% block content %}
-    <h2>{{ pagina.titulo }}</h2>
-    <p>{{ pagina.contenido }}</p> 
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-6">
+            {% if pagina.imagen %}
+            <img src="{{ pagina.imagen.url }}" class="img-fluid rounded" alt="{{ pagina.titulo }}">
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <h2>{{ pagina.titulo }}</h2>
+            <p class="lead">{{ pagina.descripcion }}</p>
+            <div class="my-4">
+                <h4>Detalles:</h4>
+                <div>{{ pagina.contenido|safe }}</div>
+            </div>
+            <p><small class="text-muted">Publicado: {{ pagina.fecha_creacion|date:"d/m/Y" }}</small></p>
+
+            <div class="mt-3">
+                <a href="{% url 'agregar_al_carrito' pagina.id %}" class="btn btn-success">Agregar al Carrito</a>
+            </div>
+
+            {% if user.is_staff %}
+            <div class="mt-3">
+                <a href="{% url 'editar_pagina' pagina.id %}" class="btn btn-warning">Editar</a>
+            </div>
+            {% endif %}
+            
+            <a href="{% url 'lista_paginas' %}" class="btn btn-secondary mt-3">Volver al catálogo</a>
+        </div>
+    </div>
+</div>
 {% endblock %}

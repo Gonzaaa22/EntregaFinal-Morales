@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Filtros por categoría -->
+    <div class="mb-4">
+        <h4>Categorías</h4>
+        <div class="btn-group" role="group">
+            <a href="{% url 'lista_paginas' %}" class="btn {% if not categoria_actual %}btn-primary{% else %}btn-outline-primary{% endif %}">
+                Todos
+            </a>
+            <a href="{% url 'lista_paginas' %}?categoria=pantalones" class="btn {% if categoria_actual == 'pantalones' %}btn-primary{% else %}btn-outline-primary{% endif %}">
+                Pantalones
+            </a>
+            <a href="{% url 'lista_paginas' %}?categoria=buzos" class="btn {% if categoria_actual == 'buzos' %}btn-primary{% else %}btn-outline-primary{% endif %}">
+                Buzos
+            </a>
+            <a href="{% url 'lista_paginas' %}?categoria=remeras" class="btn {% if categoria_actual == 'remeras' %}btn-primary{% else %}btn-outline-primary{% endif %}">
+                Remeras
+            </a>
+        </div>
+    </div>
+
+    <h2>Catálogo de Productos</h2>
+    
+    {% if pages %}
+    <div class="row">
+        {% for page in pages %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                {% if page.imagen %}
+                <img src="{{ page.imagen.url }}" class="card-img-top" alt="{{ page.titulo }}" style="height: 200px; object-fit: cover;">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ page.titulo }}</h5>
+                    <p class="card-text">{{ page.descripcion }}</p>
+                    <p class="card-text"><small class="text-muted">Categoría: {{ page.get_categoria_display }}</small></p>
+                    <a href="{% url 'get_page' page.id %}" class="btn btn-primary">Ver Detalles</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-info">
+        No hay productos disponibles en esta categoría.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
